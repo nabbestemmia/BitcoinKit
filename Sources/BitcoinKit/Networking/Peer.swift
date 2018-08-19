@@ -234,7 +234,18 @@ public class Peer: NSObject, StreamDelegate {
                 case "reject":
                     // The reject message is sent when messages are rejected.
                     handleRejectMessage(payload: message.payload)
+				case "sendheaders":
+					// SPVでは必要なし
+					// BIP 130
+					break
+				case "sendcmpct":
+					// BIP 152
+					break
+				case "feefilter":
+					// BIP 133
+					break
                 default:
+					print("received not support command: \(message.command)")
                     break
                 }
             }

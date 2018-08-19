@@ -148,9 +148,9 @@ public class BCHTestnet: Testnet {
     }
     public override var dnsSeeds: [String] {
         return [
-            "testnet-seed.bitcoinabc.org",
-            "testnet-seed-abc.bitcoinforks.org",
-            "testnet-seed.bitprim.org",
+            //"testnet-seed.bitcoinabc.org",
+            //"testnet-seed-abc.bitcoinforks.org",
+            //"testnet-seed.bitprim.org",
             "testnet-seed.deadalnix.me",
             "testnet-seeder.criptolayer.net"
         ]
