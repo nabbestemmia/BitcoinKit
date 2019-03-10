@@ -57,4 +57,12 @@ class HDKeyChainTests: XCTestCase {
         XCTAssertEqual(m0122prv.extendedPublicKey().extended(), "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV")
         XCTAssertEqual(m0122prv.extended(), "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334")
     }
+	
+	func testHDKeychain2() {
+		let seed = Data(hex: "00000ef9000000000008010000000073d000000000f0d90000000000050d0000060400000b0a0dcf6800003a0000000000000f0300004f0b00bc000000000000")!
+		let keychain = HDKeychain(seed: seed, network: .testnet)
+		let masterPrivateKey = try! keychain.derivedKey(path: "m/44'/1'/0'")
+		let prv5459 = try! masterPrivateKey.derived(at: 54).derived(at: 59).extended()
+	  	XCTAssertEqual(prv5459, "tprv8k4wA4ake4QNhtpriUFBrqtaM7gfEMzAENCBLAVU78cgeiw7kcNY9Ae3S1L8RmrKykcrcYf2fhvJ5dDeq7RWGLbhSB5MUNJTgJewgvFDEgH")
+	}
 }
