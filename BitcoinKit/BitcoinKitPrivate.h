@@ -29,7 +29,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface _Hash : NSObject
 
-+ (NSData *)sha1:(NSData *)data;
+//+ (NSData *)sha1:(NSData *)data;
 + (NSData *)sha256:(NSData *)data;
 + (NSData *)sha256ripemd160:(NSData *)data;
 + (NSData *)ripemd160:(NSData *)data;

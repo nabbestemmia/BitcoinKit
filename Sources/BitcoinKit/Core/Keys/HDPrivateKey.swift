@@ -86,7 +86,7 @@ public class HDPrivateKey {
     }
 
     private func computePublicKeyData() -> Data {
-        return _SwiftKey.computePublicKey(fromPrivateKey: raw, compression: true)
+        return SwiftKey.computePublicKey(fromPrivateKey: raw, compression: true)
     }
 
     public func derived(at index: UInt32, hardened: Bool = false) throws -> HDPrivateKey {
@@ -95,7 +95,7 @@ public class HDPrivateKey {
             fatalError("invalid child index")
         }
 
-        guard let derivedKey = _HDKey(privateKey: raw, publicKey: extendedPublicKey().raw, chainCode: chainCode, depth: depth, fingerprint: fingerprint, childIndex: childIndex).derived(at: index, hardened: hardened) else {
+        guard let derivedKey = HDKey(privateKey: raw, publicKey: extendedPublicKey().raw, chainCode: chainCode, depth: depth, fingerprint: fingerprint, childIndex: childIndex).derived(at: index, hardened: hardened) else {
             throw DerivationError.derivationFailed
         }
         return HDPrivateKey(privateKey: derivedKey.privateKey!, chainCode: derivedKey.chainCode, network: network, depth: derivedKey.depth, fingerprint: derivedKey.fingerprint, childIndex: derivedKey.childIndex)

@@ -29,18 +29,19 @@ import BitcoinKit.Private
 #else
 import BitcoinKitPrivate
 #endif
+import CryptoSwift
 
 public struct Crypto {
     public static func sha1(_ data: Data) -> Data {
-        return _Hash.sha1(data)
+		return data.sha1()
     }
 
     public static func sha256(_ data: Data) -> Data {
-        return _Hash.sha256(data)
+		return data.sha256()
     }
 
     public static func sha256sha256(_ data: Data) -> Data {
-        return sha256(sha256(data))
+		return data.sha256().sha256()
     }
 
     public static func ripemd160(_ data: Data) -> Data {
@@ -48,11 +49,14 @@ public struct Crypto {
     }
 
     public static func sha256ripemd160(_ data: Data) -> Data {
-        return ripemd160(sha256(data))
+        return ripemd160(data.sha256())
     }
 
     public static func hmacsha512(data: Data, key: Data) -> Data {
-        return _Hash.hmacsha512(data, key: key)
+		guard let result = try? HMAC(key: key.map { $0 }, variant: .sha512).authenticate(data.map { $0 }) else {
+			return Data()
+		}
+		return Data(bytes: result)
     }
 
     public static func sign(_ data: Data, privateKey: PrivateKey) throws -> Data {

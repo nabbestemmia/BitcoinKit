@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import CryptoSwift
 
 final public class BitcoinComTransactionHistoryProvider: TransactionHistoryProvider {
     private let endpoint: ApiEndPoint.BitcoinCom
@@ -114,7 +115,7 @@ private struct TxIn: Codable {
     // let doubleSpentTxID: String?
 
     func asTransactionInput() -> TransactionInput? {
-        guard let signatureScript = Data(hex: scriptSig.hex), let txidData = Data(hex: String(txid)) else { return nil }
+        guard let signatureScript = CryptoSwift.Data(hex: scriptSig.hex), let txidData = CryptoSwift.Data(hex: String(txid)) else { return nil }
         let txHash: Data = Data(txidData.reversed())
         let outpoint = TransactionOutPoint(hash: txHash, index: vout)
         return TransactionInput(previousOutput: outpoint, signatureScript: signatureScript, sequence: sequence)
@@ -137,7 +138,7 @@ private struct TxOut: Codable {
     // let spentHeight: Int?
 
     func asTransactionOutput() -> TransactionOutput? {
-        guard let lockingScript = Data(hex: scriptPubKey.hex) else { return nil }
+        guard let lockingScript = BitcoinKit.Data(hex: scriptPubKey.hex) else { return nil }
         let int64Value: UInt64 = UInt64((value * 100_000_000).doubleValue)
         return TransactionOutput(value: int64Value, lockingScript: lockingScript)
     }
